@@ -1,0 +1,26 @@
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+USE IEEE.STD_LOGIC_ARITH.ALL;
+
+------------------------------------------------------------------------------------------------
+ENTITY DECODER IS
+
+		PORT (W, X, Y, Z: IN STD_LOGIC;
+				HEX: OUT STD_LOGIC_VECTOR(6 DOWNTO 0));
+				
+END DECODER;
+
+------------------------------------------------------------------------------------------------
+ARCHITECTURE DECODER OF DECODER IS
+	
+BEGIN 
+	
+	HEX(0) <= (NOT(W) AND NOT(X) AND NOT(Y) AND Z) OR (NOT(W) AND X AND NOT(Y) AND NOT(Z)) OR (W AND X AND NOT(Y) AND Z) OR (W AND NOT(X) AND Y AND Z);
+	HEX(1) <= (NOT(W) AND X AND NOT(Y) AND Z) OR (W AND X AND NOT(Z)) OR (W AND Y AND Z)  OR (X AND Y AND  NOT(Z));
+	HEX(2) <= (NOT(W) AND NOT(X) AND Y AND NOT(Z)) OR (W AND X AND NOT(Z)) OR (W AND X AND Y);
+	HEX(3) <= (NOT(W) AND NOT(X) AND NOT(Y) AND Z) OR (NOT(W) AND X AND NOT(Y) AND NOT(Z)) OR (X AND Y AND Z) OR (W AND NOT(X) AND Y AND NOT(Z));
+	HEX(4) <= (NOT(W) AND Z) OR (NOT(W) AND X AND NOT(Y)) OR (NOT(X) AND NOT(Y) AND Z);
+	HEX(5) <= (NOT(W) AND NOT(X) AND Z) OR (NOT(W) AND NOT(X) AND Y) OR (NOT(W) AND Y AND Z) OR (W AND X AND NOT(Y) AND Z); 
+	HEX(6) <= (NOT(W) AND NOT(X) AND NOT(Y)) OR (W AND X AND NOT(Y) AND NOT(Z)) OR (NOT(W) AND X AND Y AND Z);
+
+END DECODER;

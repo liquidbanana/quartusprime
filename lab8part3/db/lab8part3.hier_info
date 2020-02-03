@@ -1,0 +1,10 @@
+|lab8part3
+CLK => S_G1.IN1
+CLK => R_G1.IN1
+CLK => R_G.IN0
+CLK => S_G.IN0
+D => S_G.IN1
+D => R_G.IN1
+Q << Q.DB_MAX_OUTPUT_PORT_TYPE
+
+

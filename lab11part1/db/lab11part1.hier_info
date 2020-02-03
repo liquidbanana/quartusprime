@@ -1,0 +1,26 @@
+|lab11part1
+SW0 => dflipflop:d0.clear
+SW0 => dflipflop:d1.clear
+SW1 => yy2.IN1
+SW1 => yy1.IN1
+KEY0 => dflipflop:d0.clock
+KEY0 => dflipflop:d1.clock
+LEDR0 << dflipflop:d1.Q
+LEDR1 << dflipflop:d0.Q
+LEDR9 << dflipflop:d0.Q
+
+
+|lab11part1|dflipflop:d0
+clock => temp.CLK
+clear => temp.OUTPUTSELECT
+D => temp.DATAB
+Q <= temp.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|lab11part1|dflipflop:d1
+clock => temp.CLK
+clear => temp.OUTPUTSELECT
+D => temp.DATAB
+Q <= temp.DB_MAX_OUTPUT_PORT_TYPE
+
+

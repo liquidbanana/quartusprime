@@ -1,0 +1,104 @@
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+
+
+ENTITY DECODER IS 
+	PORT(w, x, y, z: IN STD_LOGIC;
+		hex: OUT STD_LOGIC_VECTOR(6 DOWNTO 0));
+	
+END DECODER;
+
+
+ARCHITECTURE BEHAVIOR OF DECODER IS 
+	-- SIGNALS GO HERE
+	
+	-- 0
+	signal wnotxnotynotz: std_logic;
+	signal wnotxynotznot: std_logic;
+	signal wxynotz: std_logic;
+	signal wxnotyz: std_logic;
+	
+	-- 1
+	signal wxznot: std_logic;
+	signal wnotxynotz: std_logic;
+	signal wyz: std_logic;
+	signal xyznot: std_logic;
+	
+	-- 2
+	signal wnotxnotyznot: std_logic;
+	-- reused: signal wxznot: std_logic;
+	signal wxy: std_logic;
+
+	-- 3
+	-- reused: signal wnotxnotynotz: std_logic;
+	-- reused: signal wnotxynotznot: std_logic;
+	signal xyz: std_logic;
+	signal wxnotyznot: std_logic;
+	
+	-- 4
+	signal wnotz: std_logic;
+	signal wnotxynot: std_logic;
+	signal xnotynotz: std_logic;
+	
+	-- 5
+	signal wnotxnotz: std_logic;
+	signal wnotxnoty: std_logic;
+	signal wnotyz: std_logic;
+	-- reused: signal wxynotz: std_logic;
+
+	-- 6
+	signal wnotxnotynot: std_logic;
+	signal wxynotznot: std_logic;
+	signal wnotxyz: std_logic;
+	
+
+BEGIN
+
+	-- 0
+	wnotxnotynotz <= not(w) and not(x) and not(y) and (z);
+	wnotxynotznot <= not(w) and not(x) and y and not(z);
+	wxynotz <= w and x and not(y) and z;
+	wxnotyz <= w and not(x) and y and z;
+	hex(0) <= wnotxnotynotz or wnotxynotznot or wxynotz or wxnotyz;
+	
+
+	-- 1	
+	wxznot <= w and x and not(z);
+	wnotxynotz <= not(w) and x and not(y) and z;
+	wyz <= w and y and z;
+	xyznot <= x and y and not(z);
+	hex(1) <= wxznot or wnotxynotz or wyz or xyznot;
+	
+
+	-- 2	
+	wnotxnotyznot <= not(w) and not(x) and y and not(z);
+	wxy <= w and x and y;
+	hex(2) <= wnotxnotyznot or wxznot or wxy;
+	
+	
+	-- 3	
+	xyz <= x and y and z;
+	wxnotyznot <= w and not(x) and y and not(z);
+	hex(3) <= wnotxnotynotz or wnotxynotznot or xyz or wxnotyznot;
+	
+	
+	-- 4
+	wnotz <= not(w) and z;
+	wnotxynot <= not(w) and x and not(y);
+	xnotynotz <= not(x) and y and not(z);
+	hex(4) <= wnotz or wnotxynot or xnotynotz;
+	
+	
+	-- 5
+	wnotxnotz <= not(w) and not(x) and z;
+	wnotxnoty <= not(w) and x and not(y);
+	wnotyz <= not(w) and y and z;
+	hex(5) <= wnotxnotz or wnotxnoty or wnotyz or wxynotz;
+	
+
+	-- 6
+	wnotxnotynot <= not(w) and not(x) and not(y);
+	wxynotznot <= w and x and not(y) and not(z);
+	wnotxyz <= not(w) and x and y and z;
+
+END BEHAVIOR;

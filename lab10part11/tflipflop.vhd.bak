@@ -1,0 +1,27 @@
+--LIBRARY IEEE;
+--USE ieee.std_logic_1164.all;
+--USE ieee.std_logic_arith.all;
+
+ENTITY tflipflop IS
+	PORT(T, clock, clear: IN std_logic;
+			Q: OUT std_logic);
+END tflipflop;
+
+ARCHITECTURE behavior OF tflipflop IS
+	signal temp: std_logic := '0';
+begin
+
+	process(clock)
+	begin
+	if (clock'EVENT AND clock='1') then 
+		if (clear = '0') then
+			temp <= '0';
+		elsif (T = '1') then
+			temp <= NOT(temp);
+		end if;
+	end if;
+	end process;
+	
+	Q <= temp;
+	
+end behavior;

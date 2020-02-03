@@ -1,0 +1,124 @@
+LIBRARY IEEE;
+USE ieee.std_logic_1164.all;
+USE ieee.std_logic_arith.all;
+
+ENTITY lab10part11 IS
+
+	PORT(SW1, SW0, clk: IN std_logic;
+			QoutBar: OUT std_logic;
+			HEX0, HEX1: OUT std_logic_vector(6 downto  0));
+
+END lab10part11;
+
+ARCHITECTURE behavior OF lab10part11 IS
+
+	COMPONENT tflipflop
+	PORT(T, clock, clear: IN std_logic;
+			Q: OUT std_logic);
+	END COMPONENT;
+	
+	COMPONENT hexadecimaldecoder
+	port (w, x, y, z: in std_logic;
+			hexdisplay: out std_logic_vector(6 DOWNTO 0));		
+	END COMPONENT;
+	
+	signal enable: std_logic;
+	signal clr: std_logic;
+	
+	signal q0: std_logic;
+	signal q1: std_logic;
+	signal q2: std_logic;
+	signal q3: std_logic;
+	signal q4: std_logic;
+	signal q5: std_logic;
+	signal q6: std_logic;
+	signal q7: std_logic;
+	
+	signal q1in: std_logic;
+	signal q2in: std_logic;
+	signal q3in: std_logic;
+	signal q4in: std_logic;
+	signal q5in: std_logic;
+	signal q6in: std_logic;
+	signal q7in: std_logic;
+	
+BEGIN
+
+	--enable <= SW1;
+	--clr <= SW0;
+	
+	q1in <= q0 AND SW1;
+	q2in <= q1in AND q1;
+	q3in <= q2in AND q2;
+	q4in <= q3in AND q3;
+	q5in <= q4in AND q4;
+	q6in <= q5in AND q5;
+	q7in <= q6in AND q6;
+	
+	q0call: tflipflop PORT MAP(T => SW1, clock => clk, clear => SW0, Q => q0);
+	q1call: tflipflop PORT MAP(T => q1in, clock => clk, clear => SW0, Q => q1);
+	q2call: tflipflop PORT MAP(T => q2in, clock => clk, clear => SW0, Q => q2);
+	q3call: tflipflop PORT MAP(T => q3in, clock => clk, clear => SW0, Q => q3);
+	q4call: tflipflop PORT MAP(T => q4in, clock => clk, clear => SW0, Q => q4);
+	q5call: tflipflop PORT MAP(T => q5in, clock => clk, clear => SW0, Q => q5);
+	q6call: tflipflop PORT MAP(T => q6in, clock => clk, clear => SW0, Q => q6);
+	q7call: tflipflop PORT MAP(T => q7in, clock => clk, clear => SW0, Q => q7);
+	
+	hexdisp0: hexadecimaldecoder PORT MAP(w => q3, x => q2, y => q1, z => q0, hexdisplay => HEX0);
+	hexdisp1: hexadecimaldecoder PORT MAP(w => q7, x => q6, y => q5, z => q4, hexdisplay => HEX1);
+	
+END behavior;
+
+--LIBRARY IEEE;
+--USE ieee.std_logic_1164.all;
+--USE ieee.std_logic_arith.all;
+
+ENTITY tflipflop IS
+	PORT(T, clock, clear: IN std_logic;
+			Q: OUT std_logic);
+END tflipflop;
+
+ARCHITECTURE behavior OF tflipflop IS
+	signal temp: std_logic := '0';
+begin
+
+	process(clock)
+	begin
+	if (clock'EVENT AND clock='1') then 
+		if (clear = '0') then
+			temp <= '0';
+		elsif (T = '1') then
+			temp <= NOT(temp);
+		end if;
+	end if;
+	end process;
+	
+	Q <= temp;
+	
+end behavior;
+
+
+--library ieee;
+--use ieee.std_logic_1164.all;
+--use ieee.std_logic_arith.all;
+
+entity hexadecimaldecoder is
+
+		port (w, x, y, z: in std_logic;
+				hexdisplay: out std_logic_vector(6 DOWNTO 0));
+				
+end hexadecimaldecoder;
+
+architecture decoder of hexadecimaldecoder is
+	
+begin 
+	
+	hexdisplay(0) <= (NOT(W) AND NOT(X) AND NOT(Y) AND Z) OR (NOT(W) AND X AND NOT(Y) AND NOT(Z)) OR (W AND X AND NOT(Y) AND Z) OR (W AND NOT(X) AND Y AND Z);
+	hexdisplay(1) <=	(NOT(W) AND X AND NOT(Y) AND Z) OR (W AND X AND NOT(Z)) OR (W AND Y AND Z)  OR (X AND Y AND  NOT(Z));
+	hexdisplay(2) <= (NOT(W) AND NOT(X) AND Y AND NOT(Z)) OR (W AND X AND NOT(Z)) OR (W AND X AND Y);
+	hexdisplay(3) <= (NOT(W) AND NOT(X) AND NOT(Y) AND Z) OR (NOT(W) AND X AND NOT(Y) AND NOT(Z)) OR (X AND Y AND Z) OR (W AND NOT(X) AND Y AND NOT(Z));
+	hexdisplay(4) <= (NOT(W) AND Z) OR (NOT(W) AND X AND NOT(Y)) OR (NOT(X) AND NOT(Y) AND Z);
+	hexdisplay(5) <= (NOT(W) AND NOT(X) AND Z) OR (NOT(W) AND NOT(X) AND Y) OR (NOT(W) AND Y AND Z) OR (W AND X AND NOT(Y) AND Z); 
+	hexdisplay(6) <= (NOT(W) AND NOT(X) AND NOT(Y)) OR (W AND X AND NOT(Y) AND NOT(Z)) OR (NOT(W) AND X AND Y AND Z);
+
+end decoder;

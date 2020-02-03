@@ -1,0 +1,23 @@
+LIBRARY IEEE;
+USE ieee.std_logic_1164.all;
+USE ieee.std_logic_arith.all;
+
+
+ENTITY CIRCA IS
+	PORT (SW: IN STD_LOGIC_VECTOR(9 DOWNTO 0);
+
+	
+END CIRCA;
+
+
+ARCHITECTURE BEHAVIOR OF CIRCA IS
+
+	
+
+BEGIN 
+
+	-- LEDR <= SW;
+
+
+
+END BEHAVIOR;

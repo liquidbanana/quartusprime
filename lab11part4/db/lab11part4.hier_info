@@ -1,0 +1,22 @@
+|lab11part4
+clk => state~1.DATAIN
+reset => state~3.DATAIN
+coin[0] => state.DATAA
+coin[0] => five.DATAIN
+coin[0] => state.DATAA
+coin[1] => state.OUTPUTSELECT
+coin[1] => state.OUTPUTSELECT
+coin[1] => Selector1.IN3
+coin[1] => Selector3.IN3
+coin[1] => state.DATAB
+coin[1] => ten.DATAIN
+data_out << data_out.DB_MAX_OUTPUT_PORT_TYPE
+ten << coin[1].DB_MAX_OUTPUT_PORT_TYPE
+five << coin[0].DB_MAX_OUTPUT_PORT_TYPE
+LEDR[4] << LEDR[4].DB_MAX_OUTPUT_PORT_TYPE
+LEDR[5] << LEDR[5].DB_MAX_OUTPUT_PORT_TYPE
+LEDR[6] << LEDR[6].DB_MAX_OUTPUT_PORT_TYPE
+LEDR[7] << LEDR[7].DB_MAX_OUTPUT_PORT_TYPE
+LEDR[8] << LEDR[8].DB_MAX_OUTPUT_PORT_TYPE
+
+
